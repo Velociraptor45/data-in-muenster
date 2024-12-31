@@ -1,5 +1,6 @@
 using MuensterData.Domain;
 using MuensterData.Infrastructure;
+using MuensterData.WebApp.Localization;
 using Syncfusion.Blazor;
 using Syncfusion.Licensing;
 
@@ -12,9 +13,12 @@ builder.Services.AddSyncfusionBlazor();
 builder.Services.AddDomain();
 builder.Services.AddInfrastructure();
 
+builder.Services.AddSingleton<ISyncfusionStringLocalizer, SyncfusionLocalizer>();
+
 SyncfusionLicenseProvider.RegisterLicense(builder.Configuration["SfLicenseKey"]);
 
 var app = builder.Build();
+app.UseRequestLocalization("de-DE");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
