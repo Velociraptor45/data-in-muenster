@@ -11,51 +11,52 @@
 @inject IDispatcher Dispatcher
 
 
-<SfMaps Height="700px">
-    <MapsLegendSettings Visible="true" Mode="LegendMode.Default" Type="LegendType.Markers" UseMarkerShape="true"
-                        RemoveDuplicateLegend="true" >
-        <MapsToggleLegendSettings Enable="true" ApplyShapeSettings="false">
-            <MapsToggleLegendBorder Width="2" Color="green"></MapsToggleLegendBorder>
-        </MapsToggleLegendSettings>
-    </MapsLegendSettings>
-    <MapsCenterPosition Latitude="51.9624" Longitude="7.6257"></MapsCenterPosition>
-    <MapsZoomSettings Enable="true" MaxZoom="17" ZoomFactor="13">
-        <MapsZoomToolbarSettings>
-            <MapsZoomToolbarButton ToolbarItems="ToolbarItems"></MapsZoomToolbarButton>
-        </MapsZoomToolbarSettings>
-    </MapsZoomSettings>
-    <MapsLayers>
-        <MapsLayer UrlTemplate="https://tile.openstreetmap.org/level/tileX/tileY.png" TValue="string">
-            <MapsMarkerSettings>
-                <MapsMarker Visible="true" DataSource="State.Value.Accidents.DisplayedAccidents"
-                            TValue="Accident" AnimationDuration="0" LegendText="Year"
-                            LongitudeValuePath="@nameof(Accident.Longitude)" LatitudeValuePath="@nameof(Accident.Latitude)"
-                            Height="10" Width="10" Opacity="0.4" Shape="MarkerType.Circle" ColorValuePath="Color">
-                    <MapsMarkerBorder Width="0.7" Color="black" Opacity="0.6"></MapsMarkerBorder>
-                </MapsMarker>
-            </MapsMarkerSettings>
-        </MapsLayer>
-    </MapsLayers>
-</SfMaps>
+<div class="accident-map">
+    <SfMaps Height="75%">
+        <MapsLegendSettings Visible="true" Mode="LegendMode.Default" Type="LegendType.Markers" UseMarkerShape="true"
+                            RemoveDuplicateLegend="true" >
+            <MapsToggleLegendSettings Enable="true" ApplyShapeSettings="false">
+                <MapsToggleLegendBorder Width="2" Color="green"></MapsToggleLegendBorder>
+            </MapsToggleLegendSettings>
+        </MapsLegendSettings>
+        <MapsCenterPosition Latitude="51.9624" Longitude="7.6257"></MapsCenterPosition>
+        <MapsZoomSettings Enable="true" MaxZoom="17" ZoomFactor="13">
+            <MapsZoomToolbarSettings>
+                <MapsZoomToolbarButton ToolbarItems="ToolbarItems"></MapsZoomToolbarButton>
+            </MapsZoomToolbarSettings>
+        </MapsZoomSettings>
+        <MapsLayers>
+            <MapsLayer UrlTemplate="https://tile.openstreetmap.org/level/tileX/tileY.png" TValue="string">
+                <MapsMarkerSettings>
+                    <MapsMarker Visible="true" DataSource="State.Value.Accidents.DisplayedAccidents"
+                                TValue="Accident" AnimationDuration="0" LegendText="Year"
+                                LongitudeValuePath="@nameof(Accident.Longitude)" LatitudeValuePath="@nameof(Accident.Latitude)"
+                                Height="10" Width="10" Opacity="0.4" Shape="MarkerType.Circle" ColorValuePath="Color">
+                        <MapsMarkerBorder Width="0.7" Color="black" Opacity="0.6"></MapsMarkerBorder>
+                    </MapsMarker>
+                </MapsMarkerSettings>
+            </MapsLayer>
+        </MapsLayers>
+    </SfMaps>
 
-<div class="accident-filters d-flex">
-    <div>
-        <div class="filter-label">Jahre</div>
-        <SfMultiSelect TValue="int[]" TItem="int" DataSource="State.Value.Accidents.AllFilters.Years" Width="150px"
-                       Value="State.Value.Accidents.ActiveFilters.Years">
-            <MultiSelectEvents TValue="int[]" TItem="int" ValueChange="OnSelectedYearsChanged"></MultiSelectEvents>
-        </SfMultiSelect>
-    </div>
-    <div class="ms-2">
-        <div class="filter-label">Lichtverhältnisse</div>
-        <SfMultiSelect TValue="int[]" TItem="LightCondition" DataSource="State.Value.Accidents.AllFilters.LightConditions" Width="200px"
-                       Value="State.Value.Accidents.ActiveFilters.LightConditions">
-            <MultiSelectFieldSettings Text="@nameof(LightCondition.Name)" Value="@nameof(LightCondition.Value)"></MultiSelectFieldSettings>
-            <MultiSelectEvents TValue="int[]" TItem="LightCondition" ValueChange="OnSelectedLightConditionChanged"></MultiSelectEvents>
-        </SfMultiSelect>
+    <div class="accident-filters d-flex">
+        <div>
+            <div class="filter-label">Jahre</div>
+            <SfMultiSelect TValue="int[]" TItem="int" DataSource="State.Value.Accidents.AllFilters.Years" Width="150px"
+                           Value="State.Value.Accidents.ActiveFilters.Years">
+                <MultiSelectEvents TValue="int[]" TItem="int" ValueChange="OnSelectedYearsChanged"></MultiSelectEvents>
+            </SfMultiSelect>
+        </div>
+        <div class="ms-2">
+            <div class="filter-label">Lichtverhältnisse</div>
+            <SfMultiSelect TValue="int[]" TItem="LightCondition" DataSource="State.Value.Accidents.AllFilters.LightConditions" Width="200px"
+                           Value="State.Value.Accidents.ActiveFilters.LightConditions">
+                <MultiSelectFieldSettings Text="@nameof(LightCondition.Name)" Value="@nameof(LightCondition.Value)"></MultiSelectFieldSettings>
+                <MultiSelectEvents TValue="int[]" TItem="LightCondition" ValueChange="OnSelectedLightConditionChanged"></MultiSelectEvents>
+            </SfMultiSelect>
+        </div>
     </div>
 </div>
-
 @code
 {
     private bool _alreadyInitialized = false;

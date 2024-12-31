@@ -1,3 +1,7 @@
 ﻿.filter-label {
     font-weight: bold;
 }
+
+.accident-map {
+    height: 100vh
+}
