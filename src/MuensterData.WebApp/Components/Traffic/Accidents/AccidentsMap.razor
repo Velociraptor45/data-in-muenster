@@ -12,6 +12,12 @@
 
 
 <SfMaps Height="700px">
+    <MapsLegendSettings Visible="true" Mode="LegendMode.Default" Type="LegendType.Markers" UseMarkerShape="true"
+                        RemoveDuplicateLegend="true" >
+        <MapsToggleLegendSettings Enable="true" ApplyShapeSettings="false">
+            <MapsToggleLegendBorder Width="2" Color="green"></MapsToggleLegendBorder>
+        </MapsToggleLegendSettings>
+    </MapsLegendSettings>
     <MapsCenterPosition Latitude="51.9624" Longitude="7.6257"></MapsCenterPosition>
     <MapsZoomSettings Enable="true" MaxZoom="17" ZoomFactor="13">
         <MapsZoomToolbarSettings>
@@ -22,7 +28,7 @@
         <MapsLayer UrlTemplate="https://tile.openstreetmap.org/level/tileX/tileY.png" TValue="string">
             <MapsMarkerSettings>
                 <MapsMarker Visible="true" DataSource="State.Value.Accidents.DisplayedAccidents"
-                            TValue="Accident" AnimationDuration="0"
+                            TValue="Accident" AnimationDuration="0" LegendText="Year"
                             LongitudeValuePath="@nameof(Accident.Longitude)" LatitudeValuePath="@nameof(Accident.Latitude)"
                             Height="10" Width="10" Opacity="0.4" Shape="MarkerType.Circle" ColorValuePath="Color">
                     <MapsMarkerBorder Width="0.7" Color="black" Opacity="0.6"></MapsMarkerBorder>
