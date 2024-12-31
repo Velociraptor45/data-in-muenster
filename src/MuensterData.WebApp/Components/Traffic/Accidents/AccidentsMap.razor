@@ -1,0 +1,81 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@using Fluxor
+@using MuensterData.Domain.Traffic.Actions
+@using MuensterData.Domain.Traffic.Actions.Accidents
+@using MuensterData.Domain.Traffic.States
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Maps
+
+@inject IState<TrafficState> State
+@inject IDispatcher Dispatcher
+
+<div>
+    <div>
+        <div>Jahre</div>
+        <SfMultiSelect TValue="int[]" TItem="int" DataSource="State.Value.Accidents.AllFilters.Years" Width="200px"
+                       Value="State.Value.Accidents.ActiveFilters.Years">
+            <MultiSelectEvents TValue="int[]" TItem="int" ValueChange="OnSelectedYearsChanged"></MultiSelectEvents>
+        </SfMultiSelect>
+    </div>
+    <div>
+        <div>Lichtverhältnis</div>
+        <SfMultiSelect TValue="int[]" TItem="LightCondition" DataSource="State.Value.Accidents.AllFilters.LightConditions" Width="200px"
+                       Value="State.Value.Accidents.ActiveFilters.LightConditions">
+            <MultiSelectFieldSettings Text="@nameof(LightCondition.Name)" Value="@nameof(LightCondition.Value)"></MultiSelectFieldSettings>
+            <MultiSelectEvents TValue="int[]" TItem="LightCondition" ValueChange="OnSelectedLightConditionChanged"></MultiSelectEvents>
+        </SfMultiSelect>
+    </div>
+</div>
+
+<SfMaps Height="700px">
+    <MapsCenterPosition Latitude="51.9624" Longitude="7.6257"></MapsCenterPosition>
+    <MapsZoomSettings Enable="true" MaxZoom="17" ZoomFactor="13">
+        <MapsZoomToolbarSettings>
+            <MapsZoomToolbarButton ToolbarItems="ToolbarItems"></MapsZoomToolbarButton>
+        </MapsZoomToolbarSettings>
+    </MapsZoomSettings>
+    <MapsLayers>
+        <MapsLayer UrlTemplate="https://tile.openstreetmap.org/level/tileX/tileY.png" TValue="string">
+            <MapsMarkerSettings>
+                <MapsMarker Visible="true" DataSource="State.Value.Accidents.DisplayedAccidents"
+                            TValue="Accident" AnimationDuration="0"
+                            LongitudeValuePath="@nameof(Accident.Longitude)" LatitudeValuePath="@nameof(Accident.Latitude)"
+                            Height="10" Width="10" Opacity="0.4" Shape="MarkerType.Circle" ColorValuePath="Color">
+                    <MapsMarkerBorder Width="0.7" Color="black" Opacity="0.6"></MapsMarkerBorder>
+                </MapsMarker>
+            </MapsMarkerSettings>
+        </MapsLayer>
+    </MapsLayers>
+</SfMaps>
+
+@code
+{
+    private bool _alreadyInitialized = false;
+
+    protected override void OnInitialized()
+    {
+        if (!_alreadyInitialized)
+        {
+            Dispatcher.Dispatch(new TrafficPageEnteredAction());
+            _alreadyInitialized = true;
+        }
+
+        base.OnInitialized();
+    }
+
+    public List<ToolbarItem> ToolbarItems =
+    [
+        ToolbarItem.Zoom, ToolbarItem.ZoomIn, ToolbarItem.ZoomOut, ToolbarItem.Pan
+    ];
+    
+    private void OnSelectedYearsChanged(MultiSelectChangeEventArgs<int[]> args)
+    {
+        Dispatcher.Dispatch(new SelectedYearsChangedAction(args.Value ?? []));
+    }
+
+    private void OnSelectedLightConditionChanged(MultiSelectChangeEventArgs<int[]> args)
+    {
+        Dispatcher.Dispatch(new SelectedLightConditionsChangedAction(args.Value ?? []));
+    }
+}

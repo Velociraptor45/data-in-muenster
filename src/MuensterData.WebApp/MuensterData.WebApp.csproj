@@ -5,10 +5,13 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>MuensterData.WebApp</RootNamespace>
+    <UserSecretsId>c96549c3-2d2e-4a4e-8883-d85942ede491</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="28.1.37" />
     <PackageReference Include="Syncfusion.Blazor.Maps" Version="28.1.37" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="28.1.37" />
   </ItemGroup>
 
   <ItemGroup>

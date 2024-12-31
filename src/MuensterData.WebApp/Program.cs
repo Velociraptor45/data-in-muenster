@@ -1,4 +1,7 @@
+using MuensterData.Domain;
+using MuensterData.Infrastructure;
 using Syncfusion.Blazor;
+using Syncfusion.Licensing;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSyncfusionBlazor();
+builder.Services.AddDomain();
+builder.Services.AddInfrastructure();
+
+SyncfusionLicenseProvider.RegisterLicense(builder.Configuration["SfLicenseKey"]);
 
 var app = builder.Build();
 

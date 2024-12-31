@@ -1,14 +1,15 @@
-﻿using MuensterData.Domain.Traffic;
+﻿using MuensterData.Domain.Common.Ports;
+using MuensterData.Domain.Traffic.States;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
 
 namespace MuensterData.Infrastructure.DataLoading;
-public static class CsvReader
+public class CsvReader : ICsvReader
 {
     private static readonly CultureInfo EnglishCulture = new CultureInfo("en-en");
 
-    public static IEnumerable<Accident> LoadAccidents()
+    public IEnumerable<Accident> LoadAccidents()
     {
         var executionDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         var filePath = Path.Combine(executionDirectory!, "data/unfaelle-muenster.csv");
@@ -17,6 +18,7 @@ public static class CsvReader
         const int longRowIndex = 20;
         const int latRowIndex = 21;
         const int yearRowIndex = 4;
+        const int lightConditionRowIndex = 11;
 
         foreach (var row in rows.Skip(1))
         {
@@ -25,8 +27,9 @@ public static class CsvReader
             var longitude = double.Parse(columns[longRowIndex], EnglishCulture);
             var latitude = double.Parse(columns[latRowIndex], EnglishCulture);
             var year = int.Parse(columns[yearRowIndex]);
+            var lightCondition = int.Parse(columns[lightConditionRowIndex]);
 
-            yield return new Accident(new(longitude, latitude), year);
+            yield return new Accident(new(longitude, latitude), year, lightCondition);
         }
     }
 }
