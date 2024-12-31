@@ -11,4 +11,8 @@
     <PackageReference Include="Syncfusion.Blazor.Maps" Version="28.1.37" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MuensterData.Infrastructure\MuensterData.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

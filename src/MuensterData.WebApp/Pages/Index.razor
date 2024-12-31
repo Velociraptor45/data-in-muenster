@@ -1,11 +1,65 @@
 ﻿@page "/"
 
+@using MuensterData.Domain.Traffic
+@using MuensterData.Infrastructure.DataLoading
 @using Syncfusion.Blazor.Maps
+@using Coordinate = MuensterData.Domain.Common.Coordinate
+@using MouseEventArgs = Syncfusion.Blazor.Maps.MouseEventArgs
 
 <PageTitle>Index</PageTitle>
 
-<SfMaps>
+
+<SfMaps Height="700px">
+    <MapsEvents OnClick="OnClick"></MapsEvents>
+    <MapsCenterPosition Latitude="51.9624" Longitude="7.6257"></MapsCenterPosition>
+    <MapsZoomSettings Enable="true" MaxZoom="17" ZoomFactor="13">
+        <MapsZoomToolbarSettings>
+            <MapsZoomToolbarButton ToolbarItems="ToolbarItems"></MapsZoomToolbarButton>
+        </MapsZoomToolbarSettings>
+    </MapsZoomSettings>
     <MapsLayers>
-        <MapsLayer UrlTemplate="https://tile.openstreetmap.org/level/tileX/tileY.png" TValue="string"></MapsLayer>
+        <MapsLayer UrlTemplate="https://tile.openstreetmap.org/level/tileX/tileY.png" TValue="string">
+            <MapsMarkerSettings>
+                <MapsMarker Visible="true" DataSource="Accidents.Select(x => x.Coordinate)"
+                TValue="Coordinate" AnimationDuration="0"
+                LongitudeValuePath="Longitude" LatitudeValuePath="Latitude"
+                Height="10" Width="10" Fill="red" Opacity="0.7" Shape="MarkerType.Circle">
+                </MapsMarker>
+            </MapsMarkerSettings>
+        </MapsLayer>
     </MapsLayers>
 </SfMaps>
+
+@code {
+    public List<string> Coordinates { get; set; } = [];
+
+    protected override void OnInitialized()
+    {
+        if(!Accidents.Any())
+            Accidents = CsvReader.LoadAccidents()
+                .Where(x => x is
+                { 
+                    Year: 2019,
+                    Coordinate:
+                    {
+                        Longitude: >= 7.502093508911121 and <= 7.740016177368152,
+                        Latitude: <= 52.0113100492876 and >= 51.88773057218762
+                    }
+                })
+                .ToList();
+
+        base.OnInitialized();
+    }
+
+    public List<ToolbarItem> ToolbarItems =
+    [
+        ToolbarItem.Zoom, ToolbarItem.ZoomIn, ToolbarItem.ZoomOut, ToolbarItem.Pan, ToolbarItem.Reset
+    ];
+
+    public List<Accident> Accidents { get; private set; } = [];
+
+    private void OnClick(MouseEventArgs args)
+    {
+    }
+
+}

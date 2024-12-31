@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MuensterData.Domain\MuensterData.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="data\unfaelle-muenster.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>..\..\..\..\MuensterData.WebApp\bin\Debug\net9.0\data\unfaelle-muenster.csv</Link>
+    </None>
+  </ItemGroup>
+
+</Project>
