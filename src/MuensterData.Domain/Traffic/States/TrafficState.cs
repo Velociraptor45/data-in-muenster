@@ -30,7 +30,13 @@ public class TrafficFeatureState : Feature<TrafficState>
                 ),
                 new ActiveAccidentFilters(
                     [],
-                    [lightConditions[0].Value]
+                    [lightConditions[0].Value],
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false
                 )
             )
         );

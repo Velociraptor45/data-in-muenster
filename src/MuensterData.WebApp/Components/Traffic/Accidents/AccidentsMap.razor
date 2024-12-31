@@ -6,15 +6,15 @@
 @using MuensterData.Domain.Traffic.States
 @using Syncfusion.Blazor.DropDowns
 @using Syncfusion.Blazor.Maps
+@using Syncfusion.Blazor.Buttons
 
 @inject IState<TrafficState> State
 @inject IDispatcher Dispatcher
 
-
 <div class="accident-map">
     <SfMaps Height="75%">
         <MapsLegendSettings Visible="true" Mode="LegendMode.Default" Type="LegendType.Markers" UseMarkerShape="true"
-                            RemoveDuplicateLegend="true" >
+        RemoveDuplicateLegend="true" >
             <MapsToggleLegendSettings Enable="true" ApplyShapeSettings="false">
                 <MapsToggleLegendBorder Width="2" Color="green"></MapsToggleLegendBorder>
             </MapsToggleLegendSettings>
@@ -29,9 +29,9 @@
             <MapsLayer UrlTemplate="https://tile.openstreetmap.org/level/tileX/tileY.png" TValue="string">
                 <MapsMarkerSettings>
                     <MapsMarker Visible="true" DataSource="State.Value.Accidents.DisplayedAccidents"
-                                TValue="Accident" AnimationDuration="0" LegendText="Year"
-                                LongitudeValuePath="@nameof(Accident.Longitude)" LatitudeValuePath="@nameof(Accident.Latitude)"
-                                Height="10" Width="10" Opacity="0.4" Shape="MarkerType.Circle" ColorValuePath="Color">
+                    TValue="Accident" AnimationDuration="0" LegendText="Year"
+                    LongitudeValuePath="@nameof(Accident.Longitude)" LatitudeValuePath="@nameof(Accident.Latitude)"
+                    Height="10" Width="10" Opacity="0.4" Shape="MarkerType.Circle" ColorValuePath="Color">
                         <MapsMarkerBorder Width="0.7" Color="black" Opacity="0.6"></MapsMarkerBorder>
                     </MapsMarker>
                 </MapsMarkerSettings>
@@ -39,21 +39,32 @@
         </MapsLayers>
     </SfMaps>
 
-    <div class="accident-filters d-flex">
-        <div>
-            <div class="filter-label">Jahre</div>
-            <SfMultiSelect TValue="int[]" TItem="int" DataSource="State.Value.Accidents.AllFilters.Years" Width="150px"
-                           Value="State.Value.Accidents.ActiveFilters.Years">
-                <MultiSelectEvents TValue="int[]" TItem="int" ValueChange="OnSelectedYearsChanged"></MultiSelectEvents>
-            </SfMultiSelect>
+    <div>
+        <div class="d-flex">
+            <div>
+                <div class="filter-label">Jahre</div>
+                <SfMultiSelect TValue="int[]" TItem="int" DataSource="State.Value.Accidents.AllFilters.Years" Width="150px"
+                Value="State.Value.Accidents.ActiveFilters.Years">
+                    <MultiSelectEvents TValue="int[]" TItem="int" ValueChange="OnSelectedYearsChanged"></MultiSelectEvents>
+                </SfMultiSelect>
+            </div>
+            <div class="ms-2">
+                <div class="filter-label">Lichtverhältnisse</div>
+                <SfMultiSelect TValue="int[]" TItem="LightCondition" DataSource="State.Value.Accidents.AllFilters.LightConditions" Width="200px"
+                Value="State.Value.Accidents.ActiveFilters.LightConditions">
+                    <MultiSelectFieldSettings Text="@nameof(LightCondition.Name)" Value="@nameof(LightCondition.Value)"></MultiSelectFieldSettings>
+                    <MultiSelectEvents TValue="int[]" TItem="LightCondition" ValueChange="OnSelectedLightConditionChanged"></MultiSelectEvents>
+                </SfMultiSelect>
+            </div>
         </div>
-        <div class="ms-2">
-            <div class="filter-label">Lichtverhältnisse</div>
-            <SfMultiSelect TValue="int[]" TItem="LightCondition" DataSource="State.Value.Accidents.AllFilters.LightConditions" Width="200px"
-                           Value="State.Value.Accidents.ActiveFilters.LightConditions">
-                <MultiSelectFieldSettings Text="@nameof(LightCondition.Name)" Value="@nameof(LightCondition.Value)"></MultiSelectFieldSettings>
-                <MultiSelectEvents TValue="int[]" TItem="LightCondition" ValueChange="OnSelectedLightConditionChanged"></MultiSelectEvents>
-            </SfMultiSelect>
+        <div class="mt-2">
+            <div class="filter-label">Beteiligte</div>
+            <SfCheckBox CssClass="me-3" Label="Rad" TChecked="bool" Checked="@State.Value.Accidents.ActiveFilters.WithBicycle" ValueChange="OnBicycleCheckboxToggled"></SfCheckBox>
+            <SfCheckBox CssClass="me-3" Label="PKW" TChecked="bool" Checked="@State.Value.Accidents.ActiveFilters.WithCar" ValueChange="OnCarCheckboxToggled"></SfCheckBox>
+            <SfCheckBox CssClass="me-3" Label="FussgängerIn" TChecked="bool" Checked="@State.Value.Accidents.ActiveFilters.WithPedestrian" ValueChange="OnPedestrianCheckboxToggled"></SfCheckBox>
+            <SfCheckBox CssClass="me-3" Label="Kraftrad" TChecked="bool" Checked="@State.Value.Accidents.ActiveFilters.WithMotorcycle" ValueChange="OnMotorcycleCheckboxToggled"></SfCheckBox>
+            <SfCheckBox CssClass="me-3" Label="LKW" TChecked="bool" Checked="@State.Value.Accidents.ActiveFilters.WithTruck" ValueChange="OnTruckCheckboxToggled"></SfCheckBox>
+            <SfCheckBox Label="Sonstige" TChecked="bool" Checked="@State.Value.Accidents.ActiveFilters.WithOther" ValueChange="OnOtherCheckboxToggled"></SfCheckBox>
         </div>
     </div>
 </div>
@@ -76,7 +87,7 @@
     [
         ToolbarItem.Zoom, ToolbarItem.ZoomIn, ToolbarItem.ZoomOut, ToolbarItem.Pan
     ];
-    
+
     private void OnSelectedYearsChanged(MultiSelectChangeEventArgs<int[]> args)
     {
         Dispatcher.Dispatch(new SelectedYearsChangedAction(args.Value ?? []));
@@ -85,5 +96,35 @@
     private void OnSelectedLightConditionChanged(MultiSelectChangeEventArgs<int[]> args)
     {
         Dispatcher.Dispatch(new SelectedLightConditionsChangedAction(args.Value ?? []));
+    }
+
+    private void OnBicycleCheckboxToggled(ChangeEventArgs<bool> args)
+    {
+        Dispatcher.Dispatch(new WithBicycleToggled());
+    }
+
+    private void OnCarCheckboxToggled(ChangeEventArgs<bool> args)
+    {
+        Dispatcher.Dispatch(new WithCarToggled());
+    }
+
+    private void OnPedestrianCheckboxToggled(ChangeEventArgs<bool> args)
+    {
+        Dispatcher.Dispatch(new WithPedestrianToggled());
+    }
+
+    private void OnMotorcycleCheckboxToggled(ChangeEventArgs<bool> args)
+    {
+        Dispatcher.Dispatch(new WithMotorcycleToggled());
+    }
+
+    private void OnTruckCheckboxToggled(ChangeEventArgs<bool> args)
+    {
+        Dispatcher.Dispatch(new WithTruckToggled());
+    }
+
+    private void OnOtherCheckboxToggled(ChangeEventArgs<bool> args)
+    {
+        Dispatcher.Dispatch(new WithOtherToggled());
     }
 }

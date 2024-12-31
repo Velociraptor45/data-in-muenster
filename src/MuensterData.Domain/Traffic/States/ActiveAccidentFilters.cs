@@ -2,4 +2,10 @@
 
 public record ActiveAccidentFilters(
     int[] Years,
-    int[] LightConditions);
+    int[] LightConditions,
+    bool WithBicycle,
+    bool WithCar,
+    bool WithPedestrian,
+    bool WithMotorcycle,
+    bool WithTruck,
+    bool WithOther);

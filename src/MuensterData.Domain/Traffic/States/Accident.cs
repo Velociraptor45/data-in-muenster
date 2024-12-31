@@ -2,7 +2,8 @@
 
 namespace MuensterData.Domain.Traffic.States;
 
-public record Accident(Coordinate Coordinate, int Year, int LightCondition)
+public record Accident(Coordinate Coordinate, int Year, int LightCondition, bool BicycleInvolved, bool CarInvolved,
+    bool PedestrianInvolved, bool MotorcycleInvolved, bool TruckInvolved, bool OtherInvolved)
 {
     private readonly string[] _colors =
     [
