@@ -10,23 +10,6 @@
 @inject IState<TrafficState> State
 @inject IDispatcher Dispatcher
 
-<div>
-    <div>
-        <div>Jahre</div>
-        <SfMultiSelect TValue="int[]" TItem="int" DataSource="State.Value.Accidents.AllFilters.Years" Width="200px"
-                       Value="State.Value.Accidents.ActiveFilters.Years">
-            <MultiSelectEvents TValue="int[]" TItem="int" ValueChange="OnSelectedYearsChanged"></MultiSelectEvents>
-        </SfMultiSelect>
-    </div>
-    <div>
-        <div>Lichtverhältnis</div>
-        <SfMultiSelect TValue="int[]" TItem="LightCondition" DataSource="State.Value.Accidents.AllFilters.LightConditions" Width="200px"
-                       Value="State.Value.Accidents.ActiveFilters.LightConditions">
-            <MultiSelectFieldSettings Text="@nameof(LightCondition.Name)" Value="@nameof(LightCondition.Value)"></MultiSelectFieldSettings>
-            <MultiSelectEvents TValue="int[]" TItem="LightCondition" ValueChange="OnSelectedLightConditionChanged"></MultiSelectEvents>
-        </SfMultiSelect>
-    </div>
-</div>
 
 <SfMaps Height="700px">
     <MapsCenterPosition Latitude="51.9624" Longitude="7.6257"></MapsCenterPosition>
@@ -48,6 +31,24 @@
         </MapsLayer>
     </MapsLayers>
 </SfMaps>
+
+<div class="accident-filters d-flex">
+    <div>
+        <div class="filter-label">Jahre</div>
+        <SfMultiSelect TValue="int[]" TItem="int" DataSource="State.Value.Accidents.AllFilters.Years" Width="150px"
+                       Value="State.Value.Accidents.ActiveFilters.Years">
+            <MultiSelectEvents TValue="int[]" TItem="int" ValueChange="OnSelectedYearsChanged"></MultiSelectEvents>
+        </SfMultiSelect>
+    </div>
+    <div class="ms-2">
+        <div class="filter-label">Lichtverhältnisse</div>
+        <SfMultiSelect TValue="int[]" TItem="LightCondition" DataSource="State.Value.Accidents.AllFilters.LightConditions" Width="200px"
+                       Value="State.Value.Accidents.ActiveFilters.LightConditions">
+            <MultiSelectFieldSettings Text="@nameof(LightCondition.Name)" Value="@nameof(LightCondition.Value)"></MultiSelectFieldSettings>
+            <MultiSelectEvents TValue="int[]" TItem="LightCondition" ValueChange="OnSelectedLightConditionChanged"></MultiSelectEvents>
+        </SfMultiSelect>
+    </div>
+</div>
 
 @code
 {
