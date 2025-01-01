@@ -191,4 +191,19 @@ public static class AccidentsReducer
             }
         };
     }
+
+    [ReducerMethod]
+    public static TrafficState OnMapMarkerOpacityChanged(TrafficState state, MapMarkerOpacityChangedAction action)
+    {
+        return state with
+        {
+            Accidents = state.Accidents with
+            {
+                MapSettings = state.Accidents.MapSettings with
+                {
+                    MarkerOpacity = action.NewOpacityValue
+                }
+            }
+        };
+    }
 }

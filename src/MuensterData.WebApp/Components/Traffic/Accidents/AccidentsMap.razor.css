@@ -5,3 +5,12 @@
 .accident-map {
     height: 100vh
 }
+
+.map-marker-opacity-label {
+    display: flex;
+    align-items: center;
+}
+
+.map-settings-label {
+    font-weight: bold;
+}
