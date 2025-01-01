@@ -1,3 +1,4 @@
-main {
+main ::deep {
     margin-top: 41.8px;
+    color: red;
 }

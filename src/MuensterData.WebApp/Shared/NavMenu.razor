@@ -1,33 +1,24 @@
-﻿@* <div class="navbar navbar-dark">
-    <div class="container-fluid">
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div> *@
-
-<div id="top-bar">
+﻿<div id="top-bar">
     <button type="button" class="toggler" @onclick="ToggleNavMenu">
         <i class="bi bi-list"></i>
     </button>
 </div>
 
 <div id="sidebarMenu" class="@NavMenuCssClass">
-
-</div>
-
-@* <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
+    <nav>
+        <div class="nav-item ms-4 mt-2">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <i class="bi bi-house"></i> Home
+                <i class="bi bi-house me-2"></i> Home
             </NavLink>
             <NavLink class="nav-link mt-2" href="" Match="NavLinkMatch.All">
-                <i class="bi bi-house"></i> Verkehr
+                <i class="bi bi-stoplights me-2"></i> Verkehr
+            </NavLink>
+            <NavLink class="nav-link mt-2" href="" Match="NavLinkMatch.All">
+                <i class="bi bi-info-circle me-2"></i> Über
             </NavLink>
         </div>
     </nav>
-</div> *@
+</div>
 
 @code {
     private bool collapseNavMenu = true;
