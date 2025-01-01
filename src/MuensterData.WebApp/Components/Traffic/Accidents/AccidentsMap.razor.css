@@ -1,4 +1,8 @@
-﻿.filter-label {
+﻿.accident-map {
+    padding-bottom: 20px;
+}
+
+.filter-label {
     font-weight: bold;
 }
 
@@ -9,4 +13,12 @@
 
 .map-settings-label {
     font-weight: bold;
+}
+
+.tooltip-icon:hover {
+    cursor: pointer;
+}
+
+.tooltip-icon {
+    align-self: center;
 }

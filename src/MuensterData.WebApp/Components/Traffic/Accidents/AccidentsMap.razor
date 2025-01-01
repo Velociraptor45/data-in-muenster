@@ -8,6 +8,7 @@
 @using Syncfusion.Blazor.DropDowns
 @using Syncfusion.Blazor.Inputs
 @using Syncfusion.Blazor.Maps
+@using Syncfusion.Blazor.Popups
 
 @inject IState<TrafficState> State
 @inject IDispatcher Dispatcher
@@ -19,7 +20,7 @@
             <div class="map-settings-label">Marker-Transparenz</div>
             <div class="d-flex">
                 <SfSlider Min="0.01" Max="1" Step="0.01" TValue="double" Value="State.Value.Accidents.MapSettings.MarkerOpacity"
-                          ValueChanged="x => OnMapMarkerOpacityChanged(x)" Width="150px">
+                ValueChanged="x => OnMapMarkerOpacityChanged(x)" Width="150px">
                 </SfSlider>
                 <div class="ms-2 map-marker-opacity-label">
                     <span>@((State.Value.Accidents.MapSettings.MarkerOpacity * 100).ToString("#0"))</span>
@@ -30,7 +31,7 @@
     </div>
     <SfMaps Height="700px" Background="#1F1F1F">
         <MapsLegendSettings Visible="true" Mode="LegendMode.Default" Type="LegendType.Markers" UseMarkerShape="true"
-                            RemoveDuplicateLegend="true">
+        RemoveDuplicateLegend="true">
             <MapsToggleLegendSettings Enable="true" ApplyShapeSettings="false">
                 <MapsToggleLegendBorder Width="2" Color="green"></MapsToggleLegendBorder>
             </MapsToggleLegendSettings>
@@ -46,10 +47,10 @@
             <MapsLayer UrlTemplate="https://tile.openstreetmap.org/level/tileX/tileY.png" TValue="string">
                 <MapsMarkerSettings>
                     <MapsMarker Visible="true" DataSource="State.Value.Accidents.DisplayedAccidents"
-                                TValue="Accident" AnimationDuration="0" LegendText="Year"
-                                LongitudeValuePath="@nameof(Accident.Longitude)" LatitudeValuePath="@nameof(Accident.Latitude)"
-                                Height="10" Width="10" Opacity="State.Value.Accidents.MapSettings.MarkerOpacity"
-                                Shape="MarkerType.Circle" ColorValuePath="Color">
+                    TValue="Accident" AnimationDuration="0" LegendText="Year"
+                    LongitudeValuePath="@nameof(Accident.Longitude)" LatitudeValuePath="@nameof(Accident.Latitude)"
+                    Height="10" Width="10" Opacity="State.Value.Accidents.MapSettings.MarkerOpacity"
+                    Shape="MarkerType.Circle" ColorValuePath="Color">
                         <MapsMarkerBorder Width="0.7" Color="black" Opacity="0.6"></MapsMarkerBorder>
                     </MapsMarker>
                 </MapsMarkerSettings>
@@ -62,21 +63,27 @@
             <div>
                 <div class="filter-label">Jahre</div>
                 <SfMultiSelect TValue="int[]" TItem="int" DataSource="State.Value.Accidents.AllFilters.Years" Width="150px"
-                               Value="State.Value.Accidents.ActiveFilters.Years">
+                Value="State.Value.Accidents.ActiveFilters.Years">
                     <MultiSelectEvents TValue="int[]" TItem="int" ValueChange="OnSelectedYearsChanged"></MultiSelectEvents>
                 </SfMultiSelect>
             </div>
-            <div class="ms-2">
+            <div class="ms-4">
                 <div class="filter-label">Lichtverhältnisse</div>
                 <SfMultiSelect TValue="int[]" TItem="LightCondition" DataSource="State.Value.Accidents.AllFilters.LightConditions" Width="200px"
-                               Value="State.Value.Accidents.ActiveFilters.LightConditions">
+                Value="State.Value.Accidents.ActiveFilters.LightConditions">
                     <MultiSelectFieldSettings Text="@nameof(LightCondition.Name)" Value="@nameof(LightCondition.Value)"></MultiSelectFieldSettings>
                     <MultiSelectEvents TValue="int[]" TItem="LightCondition" ValueChange="OnSelectedLightConditionChanged"></MultiSelectEvents>
                 </SfMultiSelect>
             </div>
         </div>
         <div class="mt-2">
-            <div class="filter-label">Beteiligte</div>
+            <div class="filter-label d-flex">
+                <span>Beteiligte</span>
+                <SfTooltip class="ms-1 d-flex" Target=".involved-target" Content="@InvolvedPartiesTooltip"
+                           OpensOn="Hover" Position="Position.BottomRight">
+                    <i class="bi bi-question-circle involved-target tooltip-icon"></i>
+                </SfTooltip>
+            </div>
             <SfCheckBox CssClass="me-3" Label="Rad" TChecked="bool" Checked="@State.Value.Accidents.ActiveFilters.WithBicycle" ValueChange="OnBicycleCheckboxToggled"></SfCheckBox>
             <SfCheckBox CssClass="me-3" Label="PKW" TChecked="bool" Checked="@State.Value.Accidents.ActiveFilters.WithCar" ValueChange="OnCarCheckboxToggled"></SfCheckBox>
             <SfCheckBox CssClass="me-3" Label="FussgängerIn" TChecked="bool" Checked="@State.Value.Accidents.ActiveFilters.WithPedestrian" ValueChange="OnPedestrianCheckboxToggled"></SfCheckBox>
@@ -90,6 +97,9 @@
 @code
 {
     private bool _alreadyInitialized = false;
+
+    private string InvolvedPartiesTooltip =
+        "Die ausgewählten Checkbox werden über AND verknüpft, d.h. wenn 'Rad' und 'Auto' ausgwählt sind, werden Unfälle angezeigt, an denen mindestens ein Rad und ein Auto beteiligt waren. Das schließt nicht aus, dass es noch andere UnfallteilnehmerInnen gab.";
 
     protected override void OnInitialized()
     {
