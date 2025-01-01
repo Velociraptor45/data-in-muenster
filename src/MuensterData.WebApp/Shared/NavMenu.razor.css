@@ -2,26 +2,26 @@
 /* top bar */
 
 #top-bar .bi {
-    color: #E0E0E0;
+    color: rgba(var(--primary-text-color));
 }
 
 #top-bar {
     width: 100%;
-    background-color: var(--sidebar-background-color);
+    background-color: rgba(var(--sidebar-background-color));
     position: fixed;
     top: 0;
     z-index: 1000;
-    border-bottom: 0.5px solid var(--border-color);
+    border-bottom: 0.5px solid rgba(var(--border-color));
 }
 
 .toggler:hover {
-    background-color: var(--button-hover-background-color);
+    background-color: rgba(var(--button-hover-background-color));
 }
 
 .toggler {
     padding-top: 0;
     padding-bottom: 0;
-    background-color: var(--sidebar-background-color);
+    background-color: rgba(var(--sidebar-background-color));
     border: 0;
     font-size: 1.7em;
 }
@@ -29,7 +29,7 @@
 /* sidebar */
 
 #sidebarMenu {
-    background-color: var(--sidebar-background-color);
+    background-color: rgba(var(--sidebar-background-color));
     height: 100%;
     position: fixed;
     left: 0;
@@ -48,11 +48,11 @@
 }
 
 .nav-item ::deep a {
-    color: #E0E0E0;
+    color: rgba(var(--primary-text-color));
 }
 
     .nav-item ::deep a.active {
-        border-bottom: 2px solid var(--blue-accent);
+        border-bottom: 2px solid rgba(var(--primary-color));
     }
 
 .nav-link i.bi {

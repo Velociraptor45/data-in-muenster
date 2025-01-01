@@ -1,5 +1,6 @@
 main ::deep {
     margin-top: 41.5px;
-    color: var(--primary-text-color);
-    background-color: var(--main-background-color);
+    color: rgba(var(--primary-text-color));
+    background-color: rgba(var(--main-background-color));
+    min-height: calc(100vh - 41.5px);
 }
