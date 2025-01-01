@@ -25,7 +25,7 @@ public class CsvReader : ICsvReader
         const int withPedestrianRowIndex = 14;
         const int withMotorcycleRowIndex = 15;
         const int withTruckRowIndex = 16;
-        const int withOtherRowIndex = 16;
+        const int withOtherRowIndex = 17;
 
         foreach (var row in rows.Skip(1))
         {
