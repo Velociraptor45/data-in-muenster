@@ -1,8 +1,9 @@
-.bi {
-    color: #E0E0E0;
-}
 
 /* top bar */
+
+#top-bar .bi {
+    color: #E0E0E0;
+}
 
 #top-bar {
     width: 100%;
@@ -46,15 +47,38 @@
     font-size: 1.4em;
 }
 
-.nav-item:first-of-type {
-    padding-top: 1rem;
-}
-
-.nav-item:last-of-type {
-    padding-bottom: 1rem;
-}
-
 .nav-item ::deep a {
     color: #E0E0E0;
-    height: 2.5rem;
+}
+
+    .nav-item ::deep a.active {
+        border-bottom: 2px solid #007a99; /* Lighter blue border; alternative: #c4c91f */
+    }
+
+.nav-link i.bi {
+    margin-right: 8px;
+}
+
+.nav-link:hover .bi-house,
+.nav-link.active .bi-house,
+.nav-link:hover .bi-stoplights,
+.nav-link.active .bi-stoplights,
+.nav-link:hover .bi-info-circle,
+.nav-link.active .bi-info-circle {
+    display: none;
+}
+
+.nav-link:hover .bi-house-fill,
+.nav-link.active .bi-house-fill,
+.nav-link:hover .bi-stoplights-fill,
+.nav-link.active .bi-stoplights-fill,
+.nav-link:hover .bi-info-circle-fill,
+.nav-link.active .bi-info-circle-fill {
+    display: inline;
+}
+
+.bi-house-fill,
+.bi-stoplights-fill,
+.bi-info-circle-fill {
+    display: none;
 }
