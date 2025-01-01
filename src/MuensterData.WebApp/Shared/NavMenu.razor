@@ -1,26 +1,38 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@* <div class="navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Münster-Data</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
+</div> *@
+
+<div id="top-bar">
+    <button type="button" class="toggler" @onclick="ToggleNavMenu">
+        <i class="bi bi-list"></i>
+    </button>
 </div>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+<div id="sidebarMenu" class="@NavMenuCssClass">
+
+</div>
+
+@* <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+                <i class="bi bi-house"></i> Home
+            </NavLink>
+            <NavLink class="nav-link mt-2" href="" Match="NavLinkMatch.All">
+                <i class="bi bi-house"></i> Verkehr
             </NavLink>
         </div>
     </nav>
-</div>
+</div> *@
 
 @code {
     private bool collapseNavMenu = true;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string? NavMenuCssClass => collapseNavMenu ? "collapsed" : null;
 
     private void ToggleNavMenu()
     {
