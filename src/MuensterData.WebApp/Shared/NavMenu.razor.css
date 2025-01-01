@@ -7,21 +7,21 @@
 
 #top-bar {
     width: 100%;
-    background-color: #1F1F1F;
+    background-color: var(--sidebar-background-color);
     position: fixed;
     top: 0;
     z-index: 1000;
-    border-bottom: 0.5px solid #333333;
+    border-bottom: 0.5px solid var(--border-color);
 }
 
 .toggler:hover {
-    background-color: #333333;
+    background-color: var(--button-hover-background-color);
 }
 
 .toggler {
     padding-top: 0;
     padding-bottom: 0;
-    background-color: #1F1F1F;
+    background-color: var(--sidebar-background-color);
     border: 0;
     font-size: 1.7em;
 }
@@ -29,13 +29,13 @@
 /* sidebar */
 
 #sidebarMenu {
-    background-color: #1F1F1F;
+    background-color: var(--sidebar-background-color);
     height: 100%;
     position: fixed;
     left: 0;
     width: 200px;
     z-index: 999;
-    transform: translateX(0px);
+    transform: translateX(0);
     transition: transform 250ms ease-in-out;
 }
 
@@ -52,7 +52,7 @@
 }
 
     .nav-item ::deep a.active {
-        border-bottom: 2px solid #007a99; /* Lighter blue border; alternative: #c4c91f */
+        border-bottom: 2px solid var(--blue-accent);
     }
 
 .nav-link i.bi {
