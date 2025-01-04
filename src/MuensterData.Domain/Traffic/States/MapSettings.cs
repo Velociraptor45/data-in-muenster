@@ -1,3 +1,3 @@
 ﻿namespace MuensterData.Domain.Traffic.States;
 
-public record MapSettings(double MarkerOpacity);
+public record MapSettings(bool IsOpen, double MarkerOpacity);

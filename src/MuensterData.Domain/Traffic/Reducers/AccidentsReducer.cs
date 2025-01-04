@@ -25,6 +25,11 @@ public static class AccidentsReducer
                 ActiveFilters = state.Accidents.ActiveFilters with
                 {
                     Years = [availableYears[^1]]
+                },
+                MapSettings = state.Accidents.MapSettings with
+                {
+                    IsOpen = false,
+                    MarkerOpacity = 0.4d
                 }
             }
         };
@@ -202,6 +207,21 @@ public static class AccidentsReducer
                 MapSettings = state.Accidents.MapSettings with
                 {
                     MarkerOpacity = action.NewOpacityValue
+                }
+            }
+        };
+    }
+
+    [ReducerMethod(typeof(ToggleMapSettingsVisibilityAction))]
+    public static TrafficState OnToggleMapSettingsVisibility(TrafficState state)
+    {
+        return state with
+        {
+            Accidents = state.Accidents with
+            {
+                MapSettings = state.Accidents.MapSettings with
+                {
+                    IsOpen = !state.Accidents.MapSettings.IsOpen
                 }
             }
         };

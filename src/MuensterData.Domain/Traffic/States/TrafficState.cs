@@ -38,7 +38,7 @@ public class TrafficFeatureState : Feature<TrafficState>
                     false,
                     false
                 ),
-                new MapSettings(0.4)
+                new MapSettings(false, 0.4d)
             )
         );
     }
