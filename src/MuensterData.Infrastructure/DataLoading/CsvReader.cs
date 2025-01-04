@@ -14,6 +14,7 @@ public class CsvReader : ICsvReader
     {
         var executionDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         var filePath = Path.Combine(executionDirectory!, "data/unfaelle-muenster.csv");
+        Console.WriteLine($"Looking for data in: {filePath}");
         var rows = File.ReadAllLines(filePath, Encoding.UTF8).ToList();
 
         const int longRowIndex = 20;
