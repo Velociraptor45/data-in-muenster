@@ -75,7 +75,7 @@
                 <div class="filter-label d-flex">
                     <span>Beteiligte</span>
                     <SfTooltip class="ms-1 d-flex" Target=".involved-target" Content="@_involvedPartiesTooltip"
-                    OpensOn="Hover" Position="Position.BottomRight">
+                               OpensOn="Hover" Position="Position.BottomRight">
                         <i class="bi bi-question-circle involved-target tooltip-icon"></i>
                     </SfTooltip>
                 </div>
@@ -86,6 +86,22 @@
                 <SfCheckBox CssClass="me-3" Label="LKW" TChecked="bool" Checked="@State.Value.Accidents.ActiveFilters.WithTruck" ValueChange="OnTruckCheckboxToggled"></SfCheckBox>
                 <SfCheckBox Label="Sonstige" TChecked="bool" Checked="@State.Value.Accidents.ActiveFilters.WithOther" ValueChange="OnOtherCheckboxToggled"></SfCheckBox>
             </div>
+            <div class="mt-3">
+                <div class="filter-label">Bereich</div>
+                <div class="d-flex">
+                    <SfSwitch id="only-city-area-toggle" TChecked="bool"
+                              Checked="@State.Value.Accidents.ActiveFilters.OnlyMuensterCityArea"
+                              ValueChange="OnOnlyCityAreaToggled">
+                    </SfSwitch>
+                    <label class="d-flex ms-2" for="only-city-area-toggle">
+                        <span>Nur Stadtgebiet Münster</span>
+                        <SfTooltip class="ms-1 d-flex" Target=".only-city-area-target" Content="@_onlyCityAreaTooltip"
+                                   OpensOn="Hover" Position="Position.BottomRight">
+                            <i class="bi bi-question-circle only-city-area-target tooltip-icon"></i>
+                        </SfTooltip>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -95,7 +111,10 @@
     private bool _alreadyInitialized = false;
 
     private string _involvedPartiesTooltip =
-        "Die ausgewählten Checkbox werden über AND verknüpft, d.h. wenn 'Rad' und 'Auto' ausgwählt sind, werden Unfälle angezeigt, an denen mindestens ein Rad und ein Auto beteiligt waren. Das schließt nicht aus, dass es noch andere UnfallteilnehmerInnen gab.";
+        "Die ausgewählten Checkbox werden über AND verknüpft, d.h. wenn 'Rad' und 'Auto' ausgewählt sind, werden Unfälle angezeigt, an denen mindestens ein Rad und ein Auto beteiligt waren. Das schließt nicht aus, dass es noch andere UnfallteilnehmerInnen gab.";
+
+    private string _onlyCityAreaTooltip =
+        "Zeigt nur Daten im Stadtgebiet Münster an, anstatt im gesamten Regierungsbezirk. Kann die Performance erheblich beeinflussen. Genauer Bereich kann in den Karteneinstellungen sichtbar gemacht werden";
 
     protected override void OnInitialized()
     {
@@ -123,32 +142,32 @@
         Dispatcher.Dispatch(new SelectedLightConditionsChangedAction(args.Value ?? []));
     }
 
-    private void OnBicycleCheckboxToggled(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+    private void OnBicycleCheckboxToggled(ChangeEventArgs<bool> args)
     {
         Dispatcher.Dispatch(new WithBicycleToggled());
     }
 
-    private void OnCarCheckboxToggled(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+    private void OnCarCheckboxToggled(ChangeEventArgs<bool> args)
     {
         Dispatcher.Dispatch(new WithCarToggled());
     }
 
-    private void OnPedestrianCheckboxToggled(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+    private void OnPedestrianCheckboxToggled(ChangeEventArgs<bool> args)
     {
         Dispatcher.Dispatch(new WithPedestrianToggled());
     }
 
-    private void OnMotorcycleCheckboxToggled(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+    private void OnMotorcycleCheckboxToggled(ChangeEventArgs<bool> args)
     {
         Dispatcher.Dispatch(new WithMotorcycleToggled());
     }
 
-    private void OnTruckCheckboxToggled(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+    private void OnTruckCheckboxToggled(ChangeEventArgs<bool> args)
     {
         Dispatcher.Dispatch(new WithTruckToggled());
     }
 
-    private void OnOtherCheckboxToggled(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+    private void OnOtherCheckboxToggled(ChangeEventArgs<bool> args)
     {
         Dispatcher.Dispatch(new WithOtherToggled());
     }
@@ -156,5 +175,10 @@
     private void OnMapSettingsGearClicked()
     {
         Dispatcher.Dispatch(new ToggleMapSettingsVisibilityAction());
+    }
+
+    private void OnOnlyCityAreaToggled(ChangeEventArgs<bool> args)
+    {
+        Dispatcher.Dispatch(new ToggleOnlyMuensterCityAreaAction());
     }
 }

@@ -174,11 +174,11 @@ public static class AccidentsReducer
         var accidents = state.Accidents.AllAccidents
             .Where(x => filters.Years.Contains(x.Year)
                         && filters.LightConditions.Contains(x.LightCondition)
-                        && x.Coordinate is
+                        && (!filters.OnlyMuensterCityArea || x.Coordinate is
                         {
                             Longitude: >= 7.502093508911121 and <= 7.740016177368152,
                             Latitude: <= 52.0113100492876 and >= 51.88773057218762
-                        }
+                        })
                         && (!filters.WithBicycle || x.BicycleInvolved)
                         && (!filters.WithCar || x.CarInvolved)
                         && (!filters.WithPedestrian || x.PedestrianInvolved)
@@ -225,5 +225,22 @@ public static class AccidentsReducer
                 }
             }
         };
+    }
+
+    [ReducerMethod(typeof(ToggleOnlyMuensterCityAreaAction))]
+    public static TrafficState OnToggleOnlyMuensterCityArea(TrafficState state)
+    {
+        state = state with
+        {
+            Accidents = state.Accidents with
+            {
+                ActiveFilters = state.Accidents.ActiveFilters with
+                {
+                    OnlyMuensterCityArea = !state.Accidents.ActiveFilters.OnlyMuensterCityArea
+                }
+            }
+        };
+
+        return ApplyFilters(state);
     }
 }

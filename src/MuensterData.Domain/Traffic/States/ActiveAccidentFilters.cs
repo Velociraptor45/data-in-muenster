@@ -8,4 +8,5 @@ public record ActiveAccidentFilters(
     bool WithPedestrian,
     bool WithMotorcycle,
     bool WithTruck,
-    bool WithOther);
+    bool WithOther,
+    bool OnlyMuensterCityArea);

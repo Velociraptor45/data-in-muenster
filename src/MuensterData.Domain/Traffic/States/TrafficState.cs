@@ -36,7 +36,8 @@ public class TrafficFeatureState : Feature<TrafficState>
                     false,
                     false,
                     false,
-                    false
+                    false,
+                    true
                 ),
                 new MapSettings(false, 0.4d)
             )
