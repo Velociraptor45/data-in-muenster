@@ -3,6 +3,7 @@
 @using MuensterData.Domain.Traffic.Actions.Accidents
 @using MuensterData.Domain.Traffic.States
 @using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
 
 @inject IState<TrafficState> State
 @inject IDispatcher Dispatcher
@@ -28,6 +29,15 @@
             </div>
         </div>
     </div>
+    <div>
+        <div class="map-settings-label">Bereich</div>
+        <div class="d-flex">
+            <SfSwitch TChecked="bool" Checked="@State.Value.Accidents.MapSettings.ShowMuensterCityArea"
+                      ValueChange="OnShowMuensterCityAreaToggled">
+            </SfSwitch>
+            <div class="ms-2">Stadtbereich Münster anzeigen</div>
+        </div>
+    </div>
 </div>
 
 @code
@@ -40,5 +50,10 @@
     private void OnCloseMapSettings()
     {
         Dispatcher.Dispatch(new ToggleMapSettingsVisibilityAction());
+    }
+
+    private void OnShowMuensterCityAreaToggled(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+    {
+        Dispatcher.Dispatch(new ToggleShowMuensterCityAreaAction());
     }
 }

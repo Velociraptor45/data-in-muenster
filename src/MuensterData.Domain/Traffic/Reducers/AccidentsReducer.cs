@@ -1,4 +1,5 @@
 ﻿using Fluxor;
+using MuensterData.Domain.Common.Constants;
 using MuensterData.Domain.Traffic.Actions.Accidents;
 using MuensterData.Domain.Traffic.States;
 
@@ -29,7 +30,8 @@ public static class AccidentsReducer
                 MapSettings = state.Accidents.MapSettings with
                 {
                     IsOpen = false,
-                    MarkerOpacity = 0.4d
+                    MarkerOpacity = 0.4d,
+                    ShowMuensterCityArea = false
                 }
             }
         };
@@ -174,11 +176,12 @@ public static class AccidentsReducer
         var accidents = state.Accidents.AllAccidents
             .Where(x => filters.Years.Contains(x.Year)
                         && filters.LightConditions.Contains(x.LightCondition)
-                        && (!filters.OnlyMuensterCityArea || x.Coordinate is
-                        {
-                            Longitude: >= 7.502093508911121 and <= 7.740016177368152,
-                            Latitude: <= 52.0113100492876 and >= 51.88773057218762
-                        })
+                        && (!filters.OnlyMuensterCityArea
+                            || (
+                                x.Coordinate.Longitude <= MuensterArea.BottomRight.Longitude
+                                && x.Coordinate.Longitude >= MuensterArea.TopLeft.Longitude
+                                && x.Coordinate.Latitude >= MuensterArea.BottomRight.Latitude
+                                && x.Coordinate.Latitude <= MuensterArea.TopLeft.Latitude))
                         && (!filters.WithBicycle || x.BicycleInvolved)
                         && (!filters.WithCar || x.CarInvolved)
                         && (!filters.WithPedestrian || x.PedestrianInvolved)
@@ -242,5 +245,20 @@ public static class AccidentsReducer
         };
 
         return ApplyFilters(state);
+    }
+
+    [ReducerMethod(typeof(ToggleShowMuensterCityAreaAction))]
+    public static TrafficState OnToggleShowMuensterCityArea(TrafficState state)
+    {
+        return state with
+        {
+            Accidents = state.Accidents with
+            {
+                MapSettings = state.Accidents.MapSettings with
+                {
+                    ShowMuensterCityArea = !state.Accidents.MapSettings.ShowMuensterCityArea
+                }
+            }
+        };
     }
 }
