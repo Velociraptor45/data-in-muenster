@@ -13,18 +13,24 @@ builder.Services.AddSyncfusionBlazor();
 builder.Services.AddDomain();
 builder.Services.AddInfrastructure();
 
+builder.Services.AddHsts(options =>
+{
+    options.Preload = true;
+    options.IncludeSubDomains = true;
+    options.MaxAge = TimeSpan.FromDays(365);
+});
+
 builder.Services.AddSingleton<ISyncfusionStringLocalizer, SyncfusionLocalizer>();
 
 SyncfusionLicenseProvider.RegisterLicense(builder.Configuration["SfLicenseKey"]);
 
 var app = builder.Build();
-app.UseRequestLocalization("de-DE");
 
 // Configure the HTTP request pipeline.
+app.UseRequestLocalization("de-DE");
+
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
