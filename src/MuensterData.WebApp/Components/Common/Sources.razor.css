@@ -1,4 +1,4 @@
-﻿.map-settings {
+﻿.info {
     position: absolute;
     top: 200px;
     left: 50%;
@@ -9,7 +9,7 @@
     z-index: 999;
 }
 
-.map-settings-background {
+.info-background {
     position: fixed;
     top: 0;
     left: 0;
@@ -19,12 +19,6 @@
     height: 100%;
 }
 
-.close-map-settings {
+.close-info {
     cursor: pointer;
-    margin-left: 50px;
-}
-
-.map-marker-opacity-label {
-    display: flex;
-    align-items: center;
 }

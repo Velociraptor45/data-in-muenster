@@ -5,6 +5,7 @@
 @using MuensterData.Domain.Traffic.Actions
 @using MuensterData.Domain.Traffic.Actions.Accidents
 @using MuensterData.Domain.Traffic.States
+@using MuensterData.WebApp.Components.Common
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.DropDowns
 @using Syncfusion.Blazor.Maps
@@ -18,8 +19,25 @@
     {
         <MapsSettings></MapsSettings>
     }
+    @if (State.Value.Accidents.SourcesVisible)
+    {
+        <Sources TCloseAction="ToggleMapInfoVisibilityAction">
+            <SourceContent>
+                <div>
+                    <span>Die in dieser Karte verwendeten Daten stammen von OpenData Münster:</span>
+                    <a href="https://opendata.stadt-muenster.de/dataset/unf%C3%A4lle-im-regierungsbezirk-m%C3%BCnster">
+                        Unfälle im Regierungsbezirk Münster
+                    </a>
+                </div>
+            </SourceContent>
+        </Sources>
+    }
     <div class="accident-map-content">
         <div class="d-flex justify-content-end">
+            <div class="map-info-button" @onclick="OnMapInfoButtonClicked">
+                <i class="bi bi-info-circle"></i>
+                <i class="bi bi-info-circle-fill"></i>
+            </div>
             <div class="map-settings-button" @onclick="OnMapSettingsGearClicked">
                 <i class="bi bi-gear"></i>
                 <i class="bi bi-gear-fill"></i>
@@ -183,6 +201,11 @@
     private void OnMapSettingsGearClicked()
     {
         Dispatcher.Dispatch(new ToggleMapSettingsVisibilityAction());
+    }
+
+    private void OnMapInfoButtonClicked()
+    {
+        Dispatcher.Dispatch(new ToggleMapInfoVisibilityAction());
     }
 
     private void OnOnlyCityAreaToggled(ChangeEventArgs<bool> args)

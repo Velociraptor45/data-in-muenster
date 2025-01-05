@@ -4,4 +4,5 @@ public record Accidents(
     IReadOnlyCollection<Accident> DisplayedAccidents,
     AllAccidentFilters AllFilters,
     ActiveAccidentFilters ActiveFilters,
-    MapSettings MapSettings);
+    MapSettings MapSettings,
+    bool SourcesVisible);

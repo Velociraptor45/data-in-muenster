@@ -261,4 +261,16 @@ public static class AccidentsReducer
             }
         };
     }
+
+    [ReducerMethod(typeof(ToggleMapInfoVisibilityAction))]
+    public static TrafficState OnToggleMapInfoVisibility(TrafficState state)
+    {
+        return state with
+        {
+            Accidents = state.Accidents with
+            {
+                SourcesVisible = !state.Accidents.SourcesVisible
+            }
+        };
+    }
 }

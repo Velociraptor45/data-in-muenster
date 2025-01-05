@@ -3,4 +3,5 @@ main ::deep {
     color: rgba(var(--primary-text-color));
     background-color: rgba(var(--main-background-color));
     min-height: calc(100vh - 41.5px);
+    height: 100%;
 }
