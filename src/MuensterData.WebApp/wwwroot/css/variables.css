@@ -2,10 +2,11 @@
     --main-background-color: 31, 31, 31; /* #1F1F1F */
     --sidebar-background-color: 24, 24, 24; /* #181818 */
     --primary-text-color: 224, 224, 224; /* #E0E0E0 */
+    --secondary-text-color: 31, 31, 31; /* #1F1F1F */
     --button-hover-background-color: 51, 51, 51; /* #333333 */
     --border-color: 51, 51, 51; /* #333333 */
     --primary-color: 0, 122, 153; /* #007a99 */
-    --olive-accent: 196, 201, 31; /* #c4c91f */
+    --secondary-color: 196, 201, 31; /* #c4c91f */
     --color-sf-primary: var(--primary-color);
     --color-sf-on-primary: var(--primary-text-color);
     --color-sf-on-surface: var(--primary-text-color);

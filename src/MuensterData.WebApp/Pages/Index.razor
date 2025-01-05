@@ -1,9 +1,35 @@
 ﻿@page "/"
 
+@inject NavigationManager NavigationManager
+
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<div>Moin!</div>
+<div class="content">
+    <div class="greeting">Moin!</div>
+
+    <div>
+        data-münster.de visualisiert Daten des OpenData-Projekts der Stadt Münster und dient als Ergänzung zu den
+        <a href="https://opendata.stadt-muenster.de/anwendungen">offiziellen Visualisierungen</a>.
+        Aktuell sind nur Unfalldaten grafisch aufbereitet, aber mehr kommt in den nächsten Wochen.
+    </div>
+
+    <div>
+        <div class="topics-label">Bereiche</div>
+        <div class="topics-container">
+            <div @onclick="OnTrafficClicked" class="traffic">
+                Verkehr
+            </div>
+        </div>
+    </div>
+
+    <div class="affiliation-notice">
+        data-münster.de steht in keinem Zusammenhang zur Stadt Münster, OpenData-StadtMünster oder anderen offiziellen Stellen.
+    </div>
+</div>
 
 @code {
-
+    private void OnTrafficClicked()
+    {
+        NavigationManager.NavigateTo("traffic");
+    }
 }
