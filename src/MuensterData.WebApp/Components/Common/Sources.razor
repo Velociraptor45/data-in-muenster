@@ -3,9 +3,7 @@
 @typeparam TCloseAction where TCloseAction : new()
 
 @using Fluxor
-@using MuensterData.Domain.Traffic.States
 
-@inject IState<TrafficState> State
 @inject IDispatcher Dispatcher
 
 <div class="info-background" @onclick="OnCloseInfo">
